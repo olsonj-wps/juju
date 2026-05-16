@@ -22,7 +22,7 @@
         /* Header */
         .header {
             background: white;
-            padding: 15px 30px;
+            padding: 12px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -32,7 +32,7 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #0a7ca2;
             letter-spacing: 3px;
@@ -40,7 +40,7 @@
 
         .header-stats {
             display: flex;
-            gap: 40px;
+            gap: 35px;
         }
 
         .header-stat {
@@ -48,13 +48,13 @@
         }
 
         .header-stat .value {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #333;
         }
 
         .header-stat .label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #888;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -63,8 +63,8 @@
         /* Main Layout */
         .main-container {
             display: grid;
-            grid-template-columns: 320px 1fr;
-            height: calc(100vh - 60px);
+            grid-template-columns: 1fr 340px;
+            height: calc(100vh - 52px);
         }
 
         @media (max-width: 900px) {
@@ -74,151 +74,6 @@
             .sidebar {
                 display: none;
             }
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: white;
-            overflow-y: auto;
-            border-right: 1px solid #e0e0e0;
-        }
-
-        .sidebar-section {
-            padding: 25px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .sidebar-section:last-child {
-            border-bottom: none;
-        }
-
-        .section-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #999;
-            margin-bottom: 15px;
-        }
-
-        /* McKinsey-style Insight */
-        .insight-block {
-            margin-bottom: 20px;
-        }
-
-        .insight-block:last-child {
-            margin-bottom: 0;
-        }
-
-        .insight-number {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #0a7ca2;
-            line-height: 1;
-            margin-bottom: 5px;
-        }
-
-        .insight-headline {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-            line-height: 1.3;
-            margin-bottom: 8px;
-        }
-
-        .insight-detail {
-            font-size: 0.85rem;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        /* Region Buttons */
-        .region-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .region-btn {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            border: none;
-            background: #f8f8f8;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: left;
-        }
-
-        .region-btn:hover {
-            background: #f0f0f0;
-        }
-
-        .region-btn.active {
-            background: #0a7ca2;
-            color: white;
-        }
-
-        .region-btn.active .region-pop {
-            color: rgba(255,255,255,0.8);
-        }
-
-        .region-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        .region-name {
-            flex: 1;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .region-pop {
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        /* State List */
-        .state-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .state-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .state-item:hover {
-            background: #f8f8f8;
-            margin: 0 -10px;
-            padding: 10px;
-        }
-
-        .state-item:last-child {
-            border-bottom: none;
-        }
-
-        .state-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .state-abbr {
-            font-size: 0.75rem;
-            color: #888;
-            background: #f0f0f0;
-            padding: 2px 6px;
-            border-radius: 4px;
         }
 
         /* Map Container */
@@ -231,111 +86,248 @@
             width: 100%;
         }
 
-        /* Floating Cards on Map */
-        .map-overlay {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            overflow-y: auto;
+            border-left: 1px solid #e0e0e0;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            max-width: 280px;
         }
 
-        .overlay-card {
-            background: white;
-            border-radius: 12px;
+        .sidebar-section {
             padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-bottom: 1px solid #eee;
         }
 
-        .overlay-card .card-label {
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-label {
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #999;
+            margin-bottom: 12px;
+        }
+
+        /* Big Insight */
+        .big-insight {
+            padding: 25px;
+            background: linear-gradient(135deg, #0a7ca2 0%, #086a8a 100%);
+            color: white;
+        }
+
+        .big-insight .insight-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .big-insight .insight-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.4;
             margin-bottom: 10px;
         }
 
-        .overlay-card .card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #333;
-            line-height: 1;
-        }
-
-        .overlay-card .card-context {
+        .big-insight .insight-detail {
             font-size: 0.85rem;
-            color: #666;
-            margin-top: 5px;
+            opacity: 0.85;
+            line-height: 1.5;
         }
 
-        /* Selected State Panel */
-        .selected-panel {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            max-width: 500px;
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: none;
-        }
-
-        .selected-panel.active {
-            display: block;
-        }
-
-        .selected-header {
+        /* Region Stats */
+        .region-stats {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .selected-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
+        .region-stat-row {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .selected-region {
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 20px;
+        .region-stat-row:hover {
+            background: #f0f0f0;
+        }
+
+        .region-stat-row.active {
+            background: #0a7ca2;
+            color: white;
+        }
+
+        .region-stat-row.active .region-stat-pop,
+        .region-stat-row.active .region-stat-pct {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .region-stat-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .region-stat-name {
+            flex: 1;
+            font-size: 0.9rem;
             font-weight: 500;
         }
 
-        .selected-close {
+        .region-stat-pop {
+            font-size: 0.85rem;
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .region-stat-pct {
+            font-size: 0.8rem;
+            color: #888;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        /* Mini Insights */
+        .mini-insights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .mini-insight {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .mini-insight .mini-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0a7ca2;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .mini-insight .mini-label {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        /* Floating Controls */
+        .map-controls {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-group {
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 4px;
+        }
+
+        .control-btn {
+            padding: 8px 14px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .control-btn.active {
+            background: #0a7ca2;
+            color: white;
+        }
+
+        /* Region Info Card */
+        .region-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 320px;
+            display: none;
+        }
+
+        .region-info.active {
+            display: block;
+        }
+
+        .region-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .region-info-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .region-info-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
             color: #999;
-            padding: 0;
-            line-height: 1;
         }
 
-        .selected-stats {
+        .region-info-stats {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .selected-stat .stat-value {
-            font-size: 1.4rem;
+        .region-info-stat .stat-value {
+            font-size: 1.2rem;
             font-weight: 700;
             color: #0a7ca2;
         }
 
-        .selected-stat .stat-label {
-            font-size: 0.7rem;
+        .region-info-stat .stat-label {
+            font-size: 0.65rem;
             color: #888;
             text-transform: uppercase;
+        }
+
+        .region-info-insight {
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            border-left: 3px solid #0a7ca2;
         }
 
         /* Legend */
@@ -345,66 +337,35 @@
             right: 20px;
             background: white;
             border-radius: 8px;
-            padding: 15px;
+            padding: 12px 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .legend-title {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #999;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .legend-item:last-child {
             margin-bottom: 0;
         }
 
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
             margin-right: 8px;
-        }
-
-        /* View Toggle */
-        .view-toggle {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: white;
-            border-radius: 8px;
-            padding: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 5px;
-        }
-
-        .view-btn {
-            padding: 8px 15px;
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #666;
-            transition: all 0.2s;
-        }
-
-        .view-btn.active {
-            background: #0a7ca2;
-            color: white;
         }
 
         /* Leaflet overrides */
@@ -414,39 +375,38 @@
         }
 
         .leaflet-popup-content {
-            margin: 15px;
+            margin: 12px 15px;
         }
 
-        .popup-title {
-            font-size: 1.1rem;
+        .state-popup-title {
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .popup-row {
+        .state-popup-row {
             display: flex;
             justify-content: space-between;
-            padding: 5px 0;
-            font-size: 0.9rem;
+            padding: 4px 0;
+            font-size: 0.85rem;
             border-bottom: 1px solid #eee;
         }
 
-        .popup-row:last-child {
+        .state-popup-row:last-child {
             border-bottom: none;
         }
 
-        .popup-label {
-            color: #888;
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-stats {
+                display: none;
+            }
+            .region-info {
+                left: 10px;
+                right: 10px;
+                max-width: none;
+            }
         }
-
-        .popup-value {
-            font-weight: 600;
-        }
-
-        /* Density colors */
-        .density-low { background: #e3f2fd; color: #1565c0; }
-        .density-med { background: #fff3e0; color: #e65100; }
-        .density-high { background: #fce4ec; color: #c2185b; }
     </style>
 </head>
 <body>
@@ -454,12 +414,16 @@
         <div class="logo">JUJU</div>
         <div class="header-stats">
             <div class="header-stat">
-                <div class="value" id="header-pop">--</div>
+                <div class="value" id="header-pop">215M</div>
                 <div class="label">Population</div>
             </div>
             <div class="header-stat">
                 <div class="value">8.5M km²</div>
                 <div class="label">Area</div>
+            </div>
+            <div class="header-stat">
+                <div class="value">27</div>
+                <div class="label">States</div>
             </div>
             <div class="header-stat">
                 <div class="value" id="header-rate">--</div>
@@ -469,98 +433,135 @@
     </header>
 
     <div class="main-container">
-        <aside class="sidebar">
-            <!-- Key Insight -->
-            <div class="sidebar-section">
-                <div class="section-label">Key Insight</div>
-                <div class="insight-block">
-                    <div class="insight-number">22%</div>
-                    <div class="insight-headline">of Brazilians live in São Paulo state</div>
-                    <div class="insight-detail">That's 44M people—more than the populations of Australia, Chile, and Portugal combined.</div>
-                </div>
-            </div>
-
-            <!-- Regions -->
-            <div class="sidebar-section">
-                <div class="section-label">Filter by Region</div>
-                <div class="region-buttons" id="region-buttons">
-                    <!-- JS fills -->
-                </div>
-            </div>
-
-            <!-- States in Region -->
-            <div class="sidebar-section">
-                <div class="section-label" id="states-label">All States (27)</div>
-                <div class="state-list" id="state-list">
-                    <!-- JS fills -->
-                </div>
-            </div>
-        </aside>
-
         <div class="map-container">
             <div id="map"></div>
 
-            <!-- View Toggle -->
-            <div class="view-toggle">
-                <button class="view-btn active" data-view="population" onclick="setView('population')">Population</button>
-                <button class="view-btn" data-view="density" onclick="setView('density')">Density</button>
-                <button class="view-btn" data-view="area" onclick="setView('area')">Area</button>
+            <!-- Controls -->
+            <div class="map-controls">
+                <div class="control-group">
+                    <button class="control-btn active" data-view="regions" onclick="setView('regions')">Regions</button>
+                    <button class="control-btn" data-view="states" onclick="setView('states')">States</button>
+                </div>
+                <div class="control-group">
+                    <button class="control-btn active" data-metric="population" onclick="setMetric('population')">Population</button>
+                    <button class="control-btn" data-metric="density" onclick="setMetric('density')">Density</button>
+                </div>
             </div>
 
-            <!-- Floating Insight Cards -->
-            <div class="map-overlay">
-                <div class="overlay-card">
-                    <div class="card-label">The Takeaway</div>
-                    <div class="card-value" id="overlay-insight">4 states</div>
-                    <div class="card-context" id="overlay-context">in the Southeast hold 42% of Brazil's population</div>
+            <!-- Region Info Panel -->
+            <div class="region-info" id="region-info">
+                <div class="region-info-header">
+                    <div class="region-info-title" id="info-title">Sudeste</div>
+                    <button class="region-info-close" onclick="closeInfo()">×</button>
+                </div>
+                <div class="region-info-stats">
+                    <div class="region-info-stat">
+                        <div class="stat-value" id="info-pop">89M</div>
+                        <div class="stat-label">People</div>
+                    </div>
+                    <div class="region-info-stat">
+                        <div class="stat-value" id="info-states">4</div>
+                        <div class="stat-label">States</div>
+                    </div>
+                    <div class="region-info-stat">
+                        <div class="stat-value" id="info-pct">42%</div>
+                        <div class="stat-label">of Brazil</div>
+                    </div>
+                </div>
+                <div class="region-info-insight" id="info-insight">
+                    The economic heart of Brazil—São Paulo alone generates 32% of national GDP.
                 </div>
             </div>
 
             <!-- Legend -->
-            <div class="map-legend" id="map-legend">
-                <div class="legend-title">Regions</div>
-                <!-- JS fills -->
+            <div class="map-legend" id="map-legend"></div>
+        </div>
+
+        <aside class="sidebar">
+            <!-- Big Insight -->
+            <div class="big-insight">
+                <div class="insight-number" id="big-number">42%</div>
+                <div class="insight-text" id="big-text">of Brazilians live in the Southeast</div>
+                <div class="insight-detail" id="big-detail">Just 4 states—São Paulo, Rio, Minas Gerais, and Espírito Santo—hold nearly half the country's population.</div>
             </div>
 
-            <!-- Selected State Panel -->
-            <div class="selected-panel" id="selected-panel">
-                <div class="selected-header">
-                    <div>
-                        <div class="selected-title" id="selected-name">São Paulo</div>
-                        <span class="selected-region" id="selected-region">Sudeste</span>
+            <!-- Region Stats -->
+            <div class="sidebar-section">
+                <div class="section-label">Regions by Population</div>
+                <div class="region-stats" id="region-stats"></div>
+            </div>
+
+            <!-- Mini Insights -->
+            <div class="sidebar-section">
+                <div class="section-label">Key Numbers</div>
+                <div class="mini-insights">
+                    <div class="mini-insight">
+                        <div class="mini-value">44M</div>
+                        <div class="mini-label">São Paulo pop.</div>
                     </div>
-                    <button class="selected-close" onclick="closePanel()">×</button>
-                </div>
-                <div class="selected-stats">
-                    <div class="selected-stat">
-                        <div class="stat-value" id="selected-pop">44.4M</div>
-                        <div class="stat-label">Population</div>
+                    <div class="mini-insight">
+                        <div class="mini-value">1.56M</div>
+                        <div class="mini-label">km² Amazonas</div>
                     </div>
-                    <div class="selected-stat">
-                        <div class="stat-value" id="selected-area">248k</div>
-                        <div class="stat-label">km²</div>
+                    <div class="mini-insight">
+                        <div class="mini-value">489</div>
+                        <div class="mini-label">per km² (DF)</div>
                     </div>
-                    <div class="selected-stat">
-                        <div class="stat-value" id="selected-density">179</div>
-                        <div class="stat-label">per km²</div>
-                    </div>
-                    <div class="selected-stat">
-                        <div class="stat-value" id="selected-capital">São Paulo</div>
-                        <div class="stat-label">Capital</div>
+                    <div class="mini-insight">
+                        <div class="mini-value">5,570</div>
+                        <div class="mini-label">Municipalities</div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Comparison -->
+            <div class="sidebar-section">
+                <div class="section-label">For Comparison</div>
+                <div class="mini-insights">
+                    <div class="mini-insight">
+                        <div class="mini-value">🇦🇺 26M</div>
+                        <div class="mini-label">Australia pop.</div>
+                    </div>
+                    <div class="mini-insight">
+                        <div class="mini-value">🇩🇪 84M</div>
+                        <div class="mini-label">Germany pop.</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; color: #888; margin-top: 12px; line-height: 1.5;">
+                    São Paulo state (44M) has more people than Australia. The Northeast region (57M) rivals Italy.
+                </p>
+            </div>
+        </aside>
     </div>
 
     <script>
         // Data
         const regionData = {
-            'Norte': { color: '#2e7d32', states: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'] },
-            'Nordeste': { color: '#e65100', states: ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'] },
-            'Sudeste': { color: '#1565c0', states: ['ES', 'MG', 'RJ', 'SP'] },
-            'Sul': { color: '#c2185b', states: ['PR', 'RS', 'SC'] },
-            'Centro-Oeste': { color: '#7b1fa2', states: ['DF', 'GO', 'MT', 'MS'] }
+            'Norte': {
+                color: '#2e7d32',
+                states: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'],
+                insight: 'Covers 45% of Brazil\'s land but holds only 9% of its people. Home to most of the Amazon rainforest.'
+            },
+            'Nordeste': {
+                color: '#e65100',
+                states: ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'],
+                insight: 'Brazil\'s most culturally distinct region. Historic center of sugar production and African heritage.'
+            },
+            'Sudeste': {
+                color: '#1565c0',
+                states: ['ES', 'MG', 'RJ', 'SP'],
+                insight: 'The economic heart—São Paulo alone generates 32% of national GDP. Most industrialized region.'
+            },
+            'Sul': {
+                color: '#c2185b',
+                states: ['PR', 'RS', 'SC'],
+                insight: 'Highest HDI in Brazil. Strong European (German, Italian) influence. Coldest climate.'
+            },
+            'Centro-Oeste': {
+                color: '#7b1fa2',
+                states: ['DF', 'GO', 'MT', 'MS'],
+                insight: 'Home to Brasília, the planned capital. Agricultural powerhouse—leading soy and beef producer.'
+            }
         };
 
         const stateCapitals = {
@@ -612,59 +613,307 @@
             'SE': 21918, 'DF': 5760
         };
 
-        let map, markers = [], statesData = [];
-        let activeRegion = null;
-        let currentView = 'population';
+        const totalPop = Object.values(statePopulations).reduce((a, b) => a + b, 0);
 
-        // Insights by region
-        const regionInsights = {
-            'Norte': { value: '45%', context: 'of Brazil\'s land but only 9% of its population' },
-            'Nordeste': { value: '9 states', context: 'with 27% of the population—Brazil\'s most populous region by state count' },
-            'Sudeste': { value: '42%', context: 'of Brazilians in just 4 states—the economic engine' },
-            'Sul': { value: 'Highest', context: 'HDI in Brazil with European-influenced culture' },
-            'Centro-Oeste': { value: 'Brasília', context: 'the planned capital built in just 41 months (1956-1960)' },
-            null: { value: '4 states', context: 'in the Southeast hold 42% of Brazil\'s population' }
-        };
+        let map, regionLayers = {}, stateMarkers = [];
+        let currentView = 'regions';
+        let currentMetric = 'population';
+        let activeRegion = null;
 
         function init() {
             initMap();
-            fetchData();
-            renderRegionButtons();
+            loadRegions();
+            renderRegionStats();
             renderLegend();
+            fetchCurrency();
         }
 
         function initMap() {
-            map = L.map('map', { zoomControl: false }).setView([-14.235, -51.9253], 4);
-            L.control.zoom({ position: 'bottomleft' }).addTo(map);
+            map = L.map('map', {
+                zoomControl: false,
+                minZoom: 3,
+                maxZoom: 10
+            }).setView([-14.235, -51.9253], 4);
+
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
 
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 attribution: '© OpenStreetMap © CARTO',
-                subdomains: 'abcd',
-                maxZoom: 18
-            }).addTo(map);
-
-            // Brazil boundary (simplified)
-            const brazilBoundary = [[-33.7, -73.9], [-33.7, -34.8], [5.3, -34.8], [5.3, -73.9]];
-            L.rectangle(brazilBoundary, {
-                color: '#58075a',
-                weight: 2,
-                opacity: 0.4,
-                fillOpacity: 0.02,
-                dashArray: '5, 5'
+                subdomains: 'abcd'
             }).addTo(map);
         }
 
-        async function fetchData() {
+        async function loadRegions() {
+            try {
+                // Load Brazil regions GeoJSON from IBGE
+                const res = await fetch('https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?intrarregiao=regiao&formato=application/vnd.geo+json');
+                const geojson = await res.json();
+
+                // Map region IDs to names
+                const regionIdMap = {
+                    '1': 'Norte',
+                    '2': 'Nordeste',
+                    '3': 'Sudeste',
+                    '4': 'Sul',
+                    '5': 'Centro-Oeste'
+                };
+
+                geojson.features.forEach(feature => {
+                    const regionId = feature.properties.codarea;
+                    const regionName = regionIdMap[regionId];
+                    if (!regionName) return;
+
+                    const data = regionData[regionName];
+                    const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
+                    const pct = ((pop / totalPop) * 100).toFixed(0);
+
+                    const layer = L.geoJSON(feature, {
+                        style: {
+                            fillColor: data.color,
+                            fillOpacity: 0.6,
+                            color: '#fff',
+                            weight: 2
+                        }
+                    }).addTo(map);
+
+                    layer.on('click', () => showRegionInfo(regionName));
+                    layer.on('mouseover', (e) => {
+                        e.target.setStyle({ fillOpacity: 0.8, weight: 3 });
+                    });
+                    layer.on('mouseout', (e) => {
+                        if (activeRegion !== regionName) {
+                            e.target.setStyle({ fillOpacity: 0.6, weight: 2 });
+                        }
+                    });
+
+                    // Add label
+                    const center = layer.getBounds().getCenter();
+                    const label = L.divIcon({
+                        className: 'region-label',
+                        html: `<div style="background: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.2); white-space: nowrap;">${regionName}<br><span style="font-weight: 400; color: #666;">${(pop/1e6).toFixed(0)}M</span></div>`
+                    });
+                    L.marker(center, { icon: label, interactive: false }).addTo(map);
+
+                    regionLayers[regionName] = layer;
+                });
+
+                // Also load state markers for "States" view
+                loadStateMarkers();
+
+            } catch (e) {
+                console.error('Error loading regions:', e);
+                // Fallback: just show state markers
+                loadStateMarkers();
+            }
+        }
+
+        async function loadStateMarkers() {
             try {
                 const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
-                statesData = await res.json();
-                addMarkers();
-                renderStateList();
-                fetchCurrency();
-                fetchCountryPop();
+                const states = await res.json();
+
+                states.forEach(state => {
+                    const capital = stateCapitals[state.sigla];
+                    if (!capital) return;
+
+                    const regionName = state.regiao.nome;
+                    const color = regionData[regionName]?.color || '#666';
+                    const pop = statePopulations[state.sigla] || 0;
+                    const area = stateAreas[state.sigla] || 1;
+                    const density = (pop / area).toFixed(1);
+
+                    const radius = currentMetric === 'population'
+                        ? Math.max(6, Math.min(25, Math.sqrt(pop / 1e6) * 4))
+                        : Math.max(6, Math.min(20, Math.sqrt(pop / area) * 2.5));
+
+                    const marker = L.circleMarker([capital.lat, capital.lng], {
+                        radius,
+                        fillColor: color,
+                        color: '#fff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.85
+                    });
+
+                    marker.bindPopup(`
+                        <div class="state-popup-title">${state.nome} (${state.sigla})</div>
+                        <div class="state-popup-row"><span>Capital</span><strong>${capital.name}</strong></div>
+                        <div class="state-popup-row"><span>Population</span><strong>${(pop/1e6).toFixed(1)}M</strong></div>
+                        <div class="state-popup-row"><span>Area</span><strong>${(area/1000).toFixed(0)}k km²</strong></div>
+                        <div class="state-popup-row"><span>Density</span><strong>${density}/km²</strong></div>
+                    `);
+
+                    marker.stateData = { state, capital, pop, area, density, regionName, color };
+                    stateMarkers.push(marker);
+                });
+
+                if (currentView === 'states') {
+                    showStateMarkers();
+                }
             } catch (e) {
-                console.error(e);
+                console.error('Error loading states:', e);
             }
+        }
+
+        function showStateMarkers() {
+            stateMarkers.forEach(m => m.addTo(map));
+        }
+
+        function hideStateMarkers() {
+            stateMarkers.forEach(m => map.removeLayer(m));
+        }
+
+        function showRegionLayers() {
+            Object.values(regionLayers).forEach(layer => layer.addTo(map));
+        }
+
+        function hideRegionLayers() {
+            Object.values(regionLayers).forEach(layer => map.removeLayer(layer));
+        }
+
+        function setView(view) {
+            currentView = view;
+            document.querySelectorAll('[data-view]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === view);
+            });
+
+            if (view === 'regions') {
+                hideStateMarkers();
+                showRegionLayers();
+            } else {
+                hideRegionLayers();
+                showStateMarkers();
+            }
+
+            renderLegend();
+        }
+
+        function setMetric(metric) {
+            currentMetric = metric;
+            document.querySelectorAll('[data-metric]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.metric === metric);
+            });
+
+            // Update marker sizes
+            stateMarkers.forEach(marker => {
+                const { pop, area } = marker.stateData;
+                const radius = metric === 'population'
+                    ? Math.max(6, Math.min(25, Math.sqrt(pop / 1e6) * 4))
+                    : Math.max(6, Math.min(20, Math.sqrt(pop / area) * 2.5));
+                marker.setRadius(radius);
+            });
+
+            renderLegend();
+        }
+
+        function showRegionInfo(regionName) {
+            activeRegion = regionName;
+            const data = regionData[regionName];
+            const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
+            const pct = ((pop / totalPop) * 100).toFixed(0);
+
+            document.getElementById('info-title').textContent = regionName;
+            document.getElementById('info-title').style.color = data.color;
+            document.getElementById('info-pop').textContent = (pop / 1e6).toFixed(0) + 'M';
+            document.getElementById('info-states').textContent = data.states.length;
+            document.getElementById('info-pct').textContent = pct + '%';
+            document.getElementById('info-insight').textContent = data.insight;
+
+            document.getElementById('region-info').classList.add('active');
+
+            // Highlight in sidebar
+            document.querySelectorAll('.region-stat-row').forEach(row => {
+                row.classList.toggle('active', row.dataset.region === regionName);
+            });
+
+            // Zoom to region
+            if (regionLayers[regionName]) {
+                map.fitBounds(regionLayers[regionName].getBounds(), { padding: [50, 50] });
+            }
+
+            // Update big insight
+            updateBigInsight(regionName);
+        }
+
+        function closeInfo() {
+            activeRegion = null;
+            document.getElementById('region-info').classList.remove('active');
+            document.querySelectorAll('.region-stat-row').forEach(row => row.classList.remove('active'));
+            map.setView([-14.235, -51.9253], 4);
+            resetBigInsight();
+        }
+
+        function renderRegionStats() {
+            const container = document.getElementById('region-stats');
+            const sorted = Object.entries(regionData)
+                .map(([name, data]) => {
+                    const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
+                    return { name, data, pop };
+                })
+                .sort((a, b) => b.pop - a.pop);
+
+            container.innerHTML = sorted.map(({ name, data, pop }) => {
+                const pct = ((pop / totalPop) * 100).toFixed(0);
+                return `
+                    <div class="region-stat-row" data-region="${name}" onclick="showRegionInfo('${name}')">
+                        <span class="region-stat-color" style="background: ${data.color};"></span>
+                        <span class="region-stat-name">${name}</span>
+                        <span class="region-stat-pop">${(pop/1e6).toFixed(0)}M</span>
+                        <span class="region-stat-pct">${pct}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderLegend() {
+            const container = document.getElementById('map-legend');
+
+            if (currentView === 'regions') {
+                container.innerHTML = `
+                    <div class="legend-title">Regions</div>
+                    ${Object.entries(regionData).map(([name, data]) => `
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: ${data.color};"></span>
+                            <span>${name}</span>
+                        </div>
+                    `).join('')}
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="legend-title">Circle = ${currentMetric === 'population' ? 'Population' : 'Density'}</div>
+                    ${Object.entries(regionData).map(([name, data]) => `
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: ${data.color};"></span>
+                            <span>${name}</span>
+                        </div>
+                    `).join('')}
+                `;
+            }
+        }
+
+        function updateBigInsight(regionName) {
+            const data = regionData[regionName];
+            const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
+            const pct = ((pop / totalPop) * 100).toFixed(0);
+
+            const insights = {
+                'Norte': { num: '45%', text: 'of Brazil\'s land is in the North', detail: 'Yet only 9% of Brazilians live here. The Amazon basin dominates this vast, sparsely populated region.' },
+                'Nordeste': { num: '57M', text: 'people in the Northeast', detail: 'More than Italy\'s entire population. This region has Brazil\'s richest cultural heritage and strongest African influence.' },
+                'Sudeste': { num: '42%', text: 'of Brazilians live in the Southeast', detail: 'Just 4 states—São Paulo, Rio, Minas Gerais, and Espírito Santo—hold nearly half the country\'s population.' },
+                'Sul': { num: '#1', text: 'in Human Development Index', detail: 'The South has Brazil\'s highest living standards, strongest European heritage, and coldest winters.' },
+                'Centro-Oeste': { num: '41 mo', text: 'to build Brasília from scratch', detail: 'The planned capital (1956-1960) anchors this agricultural powerhouse that feeds much of the world.' }
+            };
+
+            const insight = insights[regionName];
+            document.getElementById('big-number').textContent = insight.num;
+            document.getElementById('big-text').textContent = insight.text;
+            document.getElementById('big-detail').textContent = insight.detail;
+        }
+
+        function resetBigInsight() {
+            document.getElementById('big-number').textContent = '42%';
+            document.getElementById('big-text').textContent = 'of Brazilians live in the Southeast';
+            document.getElementById('big-detail').textContent = 'Just 4 states—São Paulo, Rio, Minas Gerais, and Espírito Santo—hold nearly half the country\'s population.';
         }
 
         async function fetchCurrency() {
@@ -675,190 +924,6 @@
                     document.getElementById('header-rate').textContent = 'R$' + parseFloat(data[0].valor).toFixed(2);
                 }
             } catch (e) {}
-        }
-
-        async function fetchCountryPop() {
-            try {
-                const res = await fetch('https://restcountries.com/v3.1/alpha/BR');
-                const data = await res.json();
-                if (data?.[0]) {
-                    document.getElementById('header-pop').textContent = (data[0].population / 1e6).toFixed(0) + 'M';
-                }
-            } catch (e) {}
-        }
-
-        function renderRegionButtons() {
-            const container = document.getElementById('region-buttons');
-            let html = `<button class="region-btn active" onclick="filterRegion(null)">
-                <span class="region-dot" style="background: #666;"></span>
-                <span class="region-name">All Regions</span>
-                <span class="region-pop">27</span>
-            </button>`;
-
-            Object.entries(regionData).forEach(([name, data]) => {
-                const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
-                html += `<button class="region-btn" data-region="${name}" onclick="filterRegion('${name}')">
-                    <span class="region-dot" style="background: ${data.color};"></span>
-                    <span class="region-name">${name}</span>
-                    <span class="region-pop">${(pop / 1e6).toFixed(0)}M</span>
-                </button>`;
-            });
-
-            container.innerHTML = html;
-        }
-
-        function renderLegend() {
-            const container = document.getElementById('map-legend');
-            let html = '<div class="legend-title">Regions</div>';
-            Object.entries(regionData).forEach(([name, data]) => {
-                html += `<div class="legend-item">
-                    <span class="legend-dot" style="background: ${data.color};"></span>
-                    <span>${name}</span>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderStateList() {
-            const container = document.getElementById('state-list');
-            const label = document.getElementById('states-label');
-
-            const filtered = statesData.filter(s => !activeRegion || s.regiao.nome === activeRegion);
-            label.textContent = activeRegion ? `${activeRegion} (${filtered.length})` : `All States (27)`;
-
-            container.innerHTML = filtered.map(state => {
-                const pop = statePopulations[state.sigla] || 0;
-                return `<div class="state-item" onclick="selectState('${state.sigla}')">
-                    <span class="state-name">${state.nome}</span>
-                    <span class="state-abbr">${state.sigla}</span>
-                </div>`;
-            }).join('');
-        }
-
-        function addMarkers() {
-            markers.forEach(m => map.removeLayer(m));
-            markers = [];
-
-            statesData.forEach(state => {
-                const capital = stateCapitals[state.sigla];
-                if (!capital) return;
-
-                const regionName = state.regiao.nome;
-                if (activeRegion && regionName !== activeRegion) return;
-
-                const color = regionData[regionName]?.color || '#666';
-                const pop = statePopulations[state.sigla] || 0;
-                const area = stateAreas[state.sigla] || 1;
-                const density = pop / area;
-
-                let radius;
-                if (currentView === 'population') {
-                    radius = Math.max(8, Math.min(30, Math.sqrt(pop / 1e6) * 5));
-                } else if (currentView === 'density') {
-                    radius = Math.max(8, Math.min(25, Math.sqrt(density) * 3));
-                } else {
-                    radius = Math.max(8, Math.min(30, Math.sqrt(area / 10000) * 2));
-                }
-
-                const marker = L.circleMarker([capital.lat, capital.lng], {
-                    radius,
-                    fillColor: color,
-                    color: '#fff',
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(map);
-
-                marker.on('click', () => selectState(state.sigla));
-
-                const popM = (pop / 1e6).toFixed(1);
-                const areaK = (area / 1000).toFixed(0);
-                marker.bindPopup(`
-                    <div class="popup-title">${state.nome}</div>
-                    <div class="popup-row"><span class="popup-label">Capital</span><span class="popup-value">${capital.name}</span></div>
-                    <div class="popup-row"><span class="popup-label">Population</span><span class="popup-value">${popM}M</span></div>
-                    <div class="popup-row"><span class="popup-label">Area</span><span class="popup-value">${areaK}k km²</span></div>
-                    <div class="popup-row"><span class="popup-label">Density</span><span class="popup-value">${density.toFixed(1)}/km²</span></div>
-                `);
-
-                markers.push(marker);
-            });
-        }
-
-        function filterRegion(region) {
-            activeRegion = region;
-
-            document.querySelectorAll('.region-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.region === region || (!region && !btn.dataset.region));
-            });
-
-            addMarkers();
-            renderStateList();
-            updateInsight();
-
-            if (region && regionData[region]) {
-                const coords = regionData[region].states
-                    .map(s => stateCapitals[s])
-                    .filter(Boolean)
-                    .map(c => [c.lat, c.lng]);
-                if (coords.length) {
-                    map.fitBounds(L.latLngBounds(coords), { padding: [50, 50] });
-                }
-            } else {
-                map.setView([-14.235, -51.9253], 4);
-            }
-
-            closePanel();
-        }
-
-        function selectState(abbr) {
-            const state = statesData.find(s => s.sigla === abbr);
-            if (!state) return;
-
-            const capital = stateCapitals[abbr];
-            const pop = statePopulations[abbr] || 0;
-            const area = stateAreas[abbr] || 1;
-            const density = (pop / area).toFixed(1);
-            const regionName = state.regiao.nome;
-            const color = regionData[regionName]?.color || '#666';
-
-            document.getElementById('selected-name').textContent = state.nome;
-            document.getElementById('selected-region').textContent = regionName;
-            document.getElementById('selected-region').style.background = color + '22';
-            document.getElementById('selected-region').style.color = color;
-            document.getElementById('selected-pop').textContent = (pop / 1e6).toFixed(1) + 'M';
-            document.getElementById('selected-area').textContent = (area / 1000).toFixed(0) + 'k';
-            document.getElementById('selected-density').textContent = density;
-            document.getElementById('selected-capital').textContent = capital?.name || '-';
-
-            document.getElementById('selected-panel').classList.add('active');
-
-            if (capital) {
-                map.setView([capital.lat, capital.lng], 6);
-            }
-        }
-
-        function closePanel() {
-            document.getElementById('selected-panel').classList.remove('active');
-        }
-
-        function setView(view) {
-            currentView = view;
-            document.querySelectorAll('.view-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.view === view);
-            });
-            addMarkers();
-
-            // Update legend title
-            const legend = document.getElementById('map-legend');
-            const titles = { population: 'Circle = Population', density: 'Circle = Density', area: 'Circle = Area' };
-            legend.querySelector('.legend-title').textContent = titles[view] || 'Regions';
-        }
-
-        function updateInsight() {
-            const insight = regionInsights[activeRegion] || regionInsights[null];
-            document.getElementById('overlay-insight').textContent = insight.value;
-            document.getElementById('overlay-context').textContent = insight.context;
         }
 
         init();
