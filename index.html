@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juju - Brazil Data Explorer</title>
+    <title>Juju - Brazil Explorer</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -15,216 +15,143 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8f9fa;
-            min-height: 100vh;
+            background: #f5f5f5;
             color: #333;
         }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #0a7ca2 0%, #58075a 100%);
-            padding: 60px 20px;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 200;
-            letter-spacing: 12px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-
-        .hero-stats {
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 30px;
             display: flex;
-            justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+            z-index: 1000;
         }
 
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat .big-number {
-            font-size: 3rem;
+        .logo {
+            font-size: 1.5rem;
             font-weight: 700;
+            color: #0a7ca2;
+            letter-spacing: 3px;
         }
 
-        .hero-stat .label {
-            font-size: 0.85rem;
-            opacity: 0.8;
+        .header-stats {
+            display: flex;
+            gap: 40px;
+        }
+
+        .header-stat {
+            text-align: right;
+        }
+
+        .header-stat .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .header-stat .label {
+            font-size: 0.7rem;
+            color: #888;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Insight Cards */
-        .insights-section {
-            padding: 60px 0;
-        }
-
-        .insight-grid {
+        /* Main Layout */
+        .main-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            grid-template-columns: 320px 1fr;
+            height: calc(100vh - 60px);
         }
 
         @media (max-width: 900px) {
-            .insight-grid {
+            .main-container {
                 grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
             }
         }
 
-        .insight-card {
+        /* Sidebar */
+        .sidebar {
             background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow-y: auto;
+            border-right: 1px solid #e0e0e0;
         }
 
-        .insight-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+        .sidebar-section {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
         }
 
-        .insight-card.featured {
-            grid-column: span 2;
-            background: linear-gradient(135deg, #0a7ca2 0%, #0d8fb8 100%);
-            color: white;
+        .sidebar-section:last-child {
+            border-bottom: none;
         }
 
-        .insight-card.featured .insight-label {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .insight-label {
-            font-size: 0.75rem;
+        .section-label {
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #888;
-            margin-bottom: 12px;
-        }
-
-        .insight-headline {
-            font-size: 1.4rem;
-            font-weight: 600;
-            line-height: 1.4;
+            color: #999;
             margin-bottom: 15px;
         }
 
-        .insight-card.featured .insight-headline {
-            font-size: 1.8rem;
+        /* McKinsey-style Insight */
+        .insight-block {
+            margin-bottom: 20px;
         }
 
-        .insight-detail {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .insight-card.featured .insight-detail {
-            color: rgba(255,255,255,0.85);
+        .insight-block:last-child {
+            margin-bottom: 0;
         }
 
         .insight-number {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 700;
             color: #0a7ca2;
+            line-height: 1;
             margin-bottom: 5px;
         }
 
-        .insight-card.featured .insight-number {
-            color: white;
-            font-size: 4rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            margin-bottom: 30px;
-        }
-
-        .section-header h2 {
-            font-size: 2rem;
+        .insight-headline {
+            font-size: 1rem;
             font-weight: 600;
-            color: #222;
+            color: #333;
+            line-height: 1.3;
             margin-bottom: 8px;
         }
 
-        .section-header p {
+        .insight-detail {
+            font-size: 0.85rem;
             color: #666;
-            font-size: 1.1rem;
+            line-height: 1.5;
         }
 
-        /* Map Section */
-        .map-section {
-            padding: 60px 0;
-            background: white;
-        }
-
-        .map-wrapper {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 30px;
-            background: #f8f9fa;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        @media (max-width: 900px) {
-            .map-wrapper {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .map-sidebar {
-            padding: 25px;
-            background: white;
-        }
-
-        .map-sidebar h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .region-filter {
-            margin-bottom: 25px;
+        /* Region Buttons */
+        .region-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .region-btn {
             display: flex;
             align-items: center;
-            width: 100%;
             padding: 12px 15px;
             border: none;
-            background: #f8f9fa;
-            border-radius: 10px;
+            background: #f8f8f8;
+            border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 8px;
             transition: all 0.2s ease;
             text-align: left;
         }
 
         .region-btn:hover {
-            background: #e9ecef;
+            background: #f0f0f0;
         }
 
         .region-btn.active {
@@ -232,578 +159,408 @@
             color: white;
         }
 
-        .region-btn .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 12px;
+        .region-btn.active .region-pop {
+            color: rgba(255,255,255,0.8);
         }
 
-        .region-btn .name {
+        .region-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .region-name {
             flex: 1;
             font-size: 0.9rem;
             font-weight: 500;
         }
 
-        .region-btn .count {
+        .region-pop {
             font-size: 0.8rem;
-            opacity: 0.7;
+            color: #888;
         }
 
-        .selected-state {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
+        /* State List */
+        .state-list {
+            max-height: 300px;
+            overflow-y: auto;
         }
 
-        .selected-state h4 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .selected-state .detail-row {
+        .state-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 0.9rem;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .selected-state .detail-row:last-child {
+        .state-item:hover {
+            background: #f8f8f8;
+            margin: 0 -10px;
+            padding: 10px;
+        }
+
+        .state-item:last-child {
             border-bottom: none;
         }
 
-        .selected-state .detail-label {
-            color: #888;
-        }
-
-        .selected-state .detail-value {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .map-container {
-            height: 500px;
-        }
-
-        #brazil-map {
-            height: 100%;
-            width: 100%;
-            border-radius: 0 20px 20px 0;
-        }
-
-        @media (max-width: 900px) {
-            #brazil-map {
-                border-radius: 0 0 20px 20px;
-            }
-        }
-
-        /* Region Breakdown */
-        .regions-section {
-            padding: 60px 0;
-        }
-
-        .region-cards {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-        }
-
-        @media (max-width: 1000px) {
-            .region-cards {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .region-cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .region-card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-        }
-
-        .region-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .region-card.active {
-            border-color: currentColor;
-        }
-
-        .region-card .region-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .region-card h4 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-
-        .region-card .region-pop {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .region-card .region-states {
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        /* Colors */
-        .color-norte { color: #2e7d32; }
-        .color-nordeste { color: #e65100; }
-        .color-sudeste { color: #1565c0; }
-        .color-sul { color: #c2185b; }
-        .color-centro-oeste { color: #7b1fa2; }
-
-        .bg-norte { background: #e8f5e9; }
-        .bg-nordeste { background: #fff3e0; }
-        .bg-sudeste { background: #e3f2fd; }
-        .bg-sul { background: #fce4ec; }
-        .bg-centro-oeste { background: #f3e5f5; }
-
-        /* States Grid */
-        .states-section {
-            padding: 60px 0;
-            background: white;
-        }
-
-        .states-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-box input {
-            padding: 12px 20px 12px 45px;
-            border: 2px solid #e9ecef;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            width: 280px;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #0a7ca2;
-        }
-
-        .search-box::before {
-            content: "🔍";
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1rem;
-        }
-
-        .states-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .state-card {
-            background: #f8f9fa;
-            border-radius: 16px;
-            padding: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 4px solid;
-        }
-
-        .state-card:hover {
-            background: white;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            transform: translateY(-3px);
-        }
-
-        .state-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .state-card h3 {
-            font-size: 1.15rem;
-            margin-bottom: 3px;
-        }
-
-        .state-card .capital {
-            font-size: 0.85rem;
-            color: #888;
+        .state-name {
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .state-abbr {
-            background: white;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .state-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .state-stat {
-            background: white;
-            padding: 12px;
-            border-radius: 10px;
-        }
-
-        .state-stat .value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .state-stat .label {
             font-size: 0.75rem;
             color: #888;
-            text-transform: uppercase;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
-        /* Comparisons Section */
-        .comparisons-section {
-            padding: 60px 0;
+        /* Map Container */
+        .map-container {
+            position: relative;
         }
 
-        .comparison-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+        #map {
+            height: 100%;
+            width: 100%;
         }
 
-        @media (max-width: 700px) {
-            .comparison-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .comparison-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-card h4 {
-            font-size: 1rem;
-            color: #888;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .comparison-item {
+        /* Floating Cards on Map */
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 280px;
+        }
+
+        .overlay-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .overlay-card .card-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .overlay-card .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            line-height: 1;
+        }
+
+        .overlay-card .card-context {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Selected State Panel */
+        .selected-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 500px;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .selected-panel.active {
+            display: block;
+        }
+
+        .selected-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 20px;
         }
 
-        .comparison-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .comparison-bar-container {
-            flex: 1;
-        }
-
-        .comparison-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-        }
-
-        .comparison-bar {
-            height: 12px;
-            background: #e9ecef;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .comparison-bar-fill {
-            height: 100%;
-            border-radius: 6px;
-            transition: width 1s ease;
-        }
-
-        .comparison-bar-fill.brazil {
-            background: linear-gradient(90deg, #0a7ca2, #58075a);
-        }
-
-        .comparison-bar-fill.other {
-            background: #ccc;
-        }
-
-        /* Footer */
-        footer {
-            background: #222;
-            color: rgba(255,255,255,0.7);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        footer a {
-            color: #0a7ca2;
-            text-decoration: none;
-        }
-
-        .api-sources {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .api-source {
-            font-size: 0.85rem;
-        }
-
-        /* Loading */
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e9ecef;
-            border-top-color: #0a7ca2;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 40px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Leaflet popup */
-        .leaflet-popup-content-wrapper {
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .popup-content {
-            padding: 5px;
-        }
-
-        .popup-content h4 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+        .selected-title {
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #333;
         }
 
-        .popup-content .popup-stat {
+        .selected-region {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .selected-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .selected-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .selected-stat .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0a7ca2;
+        }
+
+        .selected-stat .stat-label {
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        /* Legend */
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 0.8rem;
+        }
+
+        .legend-title {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 5px;
+        }
+
+        .view-btn {
+            padding: 8px 15px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: #0a7ca2;
+            color: white;
+        }
+
+        /* Leaflet overrides */
+        .leaflet-popup-content-wrapper {
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .leaflet-popup-content {
+            margin: 15px;
+        }
+
+        .popup-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .popup-row {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            padding: 5px 0;
             font-size: 0.9rem;
             border-bottom: 1px solid #eee;
         }
 
-        .popup-content .popup-stat:last-child {
+        .popup-row:last-child {
             border-bottom: none;
         }
 
-        /* Responsive hero */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.5rem;
-                letter-spacing: 6px;
-            }
-
-            .hero-stats {
-                gap: 30px;
-            }
-
-            .hero-stat .big-number {
-                font-size: 2rem;
-            }
+        .popup-label {
+            color: #888;
         }
+
+        .popup-value {
+            font-weight: 600;
+        }
+
+        /* Density colors */
+        .density-low { background: #e3f2fd; color: #1565c0; }
+        .density-med { background: #fff3e0; color: #e65100; }
+        .density-high { background: #fce4ec; color: #c2185b; }
     </style>
 </head>
 <body>
-    <!-- Hero -->
-    <section class="hero">
-        <h1>Juju</h1>
-        <p class="hero-subtitle">Brazil is the world's 5th largest country by area and 7th by population. Explore its 27 states, 5 regions, and over 5,500 municipalities.</p>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="big-number" id="hero-pop">--</div>
-                <div class="label">People</div>
+    <header class="header">
+        <div class="logo">JUJU</div>
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="value" id="header-pop">--</div>
+                <div class="label">Population</div>
             </div>
-            <div class="hero-stat">
-                <div class="big-number">8.5M</div>
-                <div class="label">km² Area</div>
+            <div class="header-stat">
+                <div class="value">8.5M km²</div>
+                <div class="label">Area</div>
             </div>
-            <div class="hero-stat">
-                <div class="big-number" id="hero-rate">--</div>
-                <div class="label">BRL per USD</div>
+            <div class="header-stat">
+                <div class="value" id="header-rate">--</div>
+                <div class="label">USD/BRL</div>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Key Insights -->
-    <section class="insights-section">
-        <div class="container">
-            <div class="insight-grid">
-                <div class="insight-card featured">
-                    <div class="insight-label">Population Concentration</div>
-                    <div class="insight-headline">São Paulo state alone has more people than Australia, Chile, and Portugal combined</div>
-                    <div class="insight-detail">With 44.4 million residents, São Paulo is home to 22% of all Brazilians—making it the economic engine of South America.</div>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-label">Economic Powerhouse</div>
-                    <div class="insight-number" id="gdp-rank">9th</div>
-                    <div class="insight-headline">Largest economy in the world</div>
-                    <div class="insight-detail">Brazil's GDP exceeds $2 trillion USD annually.</div>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-label">Geographic Diversity</div>
-                    <div class="insight-number">5</div>
-                    <div class="insight-headline">Distinct regions</div>
-                    <div class="insight-detail">From the Amazon rainforest to southern grasslands.</div>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-label">Urban vs Rural</div>
-                    <div class="insight-number">87%</div>
-                    <div class="insight-headline">Urban population</div>
-                    <div class="insight-detail">One of the most urbanized countries in the world.</div>
+    <div class="main-container">
+        <aside class="sidebar">
+            <!-- Key Insight -->
+            <div class="sidebar-section">
+                <div class="section-label">Key Insight</div>
+                <div class="insight-block">
+                    <div class="insight-number">22%</div>
+                    <div class="insight-headline">of Brazilians live in São Paulo state</div>
+                    <div class="insight-detail">That's 44M people—more than the populations of Australia, Chile, and Portugal combined.</div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Regions Breakdown -->
-    <section class="regions-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Five Regions, Five Stories</h2>
-                <p>Click a region to filter the map and see its states</p>
+            <!-- Regions -->
+            <div class="sidebar-section">
+                <div class="section-label">Filter by Region</div>
+                <div class="region-buttons" id="region-buttons">
+                    <!-- JS fills -->
+                </div>
             </div>
-            <div class="region-cards" id="region-cards">
-                <!-- Filled by JS -->
-            </div>
-        </div>
-    </section>
 
-    <!-- Interactive Map -->
-    <section class="map-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Explore the Map</h2>
-                <p>Click any marker to see state details. Larger circles = larger population.</p>
+            <!-- States in Region -->
+            <div class="sidebar-section">
+                <div class="section-label" id="states-label">All States (27)</div>
+                <div class="state-list" id="state-list">
+                    <!-- JS fills -->
+                </div>
             </div>
-            <div class="map-wrapper">
-                <div class="map-sidebar">
-                    <h3>Filter by Region</h3>
-                    <div class="region-filter" id="region-filter">
-                        <!-- Filled by JS -->
+        </aside>
+
+        <div class="map-container">
+            <div id="map"></div>
+
+            <!-- View Toggle -->
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="population" onclick="setView('population')">Population</button>
+                <button class="view-btn" data-view="density" onclick="setView('density')">Density</button>
+                <button class="view-btn" data-view="area" onclick="setView('area')">Area</button>
+            </div>
+
+            <!-- Floating Insight Cards -->
+            <div class="map-overlay">
+                <div class="overlay-card">
+                    <div class="card-label">The Takeaway</div>
+                    <div class="card-value" id="overlay-insight">4 states</div>
+                    <div class="card-context" id="overlay-context">in the Southeast hold 42% of Brazil's population</div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="map-legend" id="map-legend">
+                <div class="legend-title">Regions</div>
+                <!-- JS fills -->
+            </div>
+
+            <!-- Selected State Panel -->
+            <div class="selected-panel" id="selected-panel">
+                <div class="selected-header">
+                    <div>
+                        <div class="selected-title" id="selected-name">São Paulo</div>
+                        <span class="selected-region" id="selected-region">Sudeste</span>
                     </div>
-                    <div class="selected-state" id="selected-state">
-                        <h4>Select a State</h4>
-                        <p style="color: #888; font-size: 0.9rem;">Click a marker on the map to see details</p>
+                    <button class="selected-close" onclick="closePanel()">×</button>
+                </div>
+                <div class="selected-stats">
+                    <div class="selected-stat">
+                        <div class="stat-value" id="selected-pop">44.4M</div>
+                        <div class="stat-label">Population</div>
                     </div>
-                </div>
-                <div class="map-container">
-                    <div id="brazil-map"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Size Comparisons -->
-    <section class="comparisons-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>How Brazil Compares</h2>
-                <p>Putting Brazil's scale in perspective</p>
-            </div>
-            <div class="comparison-cards">
-                <div class="comparison-card">
-                    <h4>Population vs Other Countries</h4>
-                    <div id="pop-comparison">
-                        <!-- Filled by JS -->
+                    <div class="selected-stat">
+                        <div class="stat-value" id="selected-area">248k</div>
+                        <div class="stat-label">km²</div>
                     </div>
-                </div>
-                <div class="comparison-card">
-                    <h4>Land Area vs Other Countries</h4>
-                    <div id="area-comparison">
-                        <!-- Filled by JS -->
+                    <div class="selected-stat">
+                        <div class="stat-value" id="selected-density">179</div>
+                        <div class="stat-label">per km²</div>
+                    </div>
+                    <div class="selected-stat">
+                        <div class="stat-value" id="selected-capital">São Paulo</div>
+                        <div class="stat-label">Capital</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- All States -->
-    <section class="states-section">
-        <div class="container">
-            <div class="states-header">
-                <div class="section-header" style="margin-bottom: 0;">
-                    <h2>All 27 States</h2>
-                    <p>Click to zoom on map</p>
-                </div>
-                <div class="search-box">
-                    <input type="text" id="state-search" placeholder="Search states...">
-                </div>
-            </div>
-            <div class="states-grid" id="states-container">
-                <div class="loading-spinner"></div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>Built with Juju — Real-time data from public APIs</p>
-            <div class="api-sources">
-                <span class="api-source"><a href="https://servicodados.ibge.gov.br" target="_blank">IBGE</a> (Geography)</span>
-                <span class="api-source"><a href="https://www.bcb.gov.br" target="_blank">Banco Central</a> (Currency)</span>
-                <span class="api-source"><a href="https://restcountries.com" target="_blank">REST Countries</a> (Demographics)</span>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
         // Data
         const regionData = {
-            'Norte': { color: '#2e7d32', bgClass: 'bg-norte', colorClass: 'color-norte', icon: '🌳', states: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'] },
-            'Nordeste': { color: '#e65100', bgClass: 'bg-nordeste', colorClass: 'color-nordeste', icon: '☀️', states: ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'] },
-            'Sudeste': { color: '#1565c0', bgClass: 'bg-sudeste', colorClass: 'color-sudeste', icon: '🏙️', states: ['ES', 'MG', 'RJ', 'SP'] },
-            'Sul': { color: '#c2185b', bgClass: 'bg-sul', colorClass: 'color-sul', icon: '🍇', states: ['PR', 'RS', 'SC'] },
-            'Centro-Oeste': { color: '#7b1fa2', bgClass: 'bg-centro-oeste', colorClass: 'color-centro-oeste', icon: '🌾', states: ['DF', 'GO', 'MT', 'MS'] }
+            'Norte': { color: '#2e7d32', states: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'] },
+            'Nordeste': { color: '#e65100', states: ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE'] },
+            'Sudeste': { color: '#1565c0', states: ['ES', 'MG', 'RJ', 'SP'] },
+            'Sul': { color: '#c2185b', states: ['PR', 'RS', 'SC'] },
+            'Centro-Oeste': { color: '#7b1fa2', states: ['DF', 'GO', 'MT', 'MS'] }
         };
 
         const stateCapitals = {
@@ -857,43 +614,56 @@
 
         let map, markers = [], statesData = [];
         let activeRegion = null;
+        let currentView = 'population';
 
-        // Initialize
+        // Insights by region
+        const regionInsights = {
+            'Norte': { value: '45%', context: 'of Brazil\'s land but only 9% of its population' },
+            'Nordeste': { value: '9 states', context: 'with 27% of the population—Brazil\'s most populous region by state count' },
+            'Sudeste': { value: '42%', context: 'of Brazilians in just 4 states—the economic engine' },
+            'Sul': { value: 'Highest', context: 'HDI in Brazil with European-influenced culture' },
+            'Centro-Oeste': { value: 'Brasília', context: 'the planned capital built in just 41 months (1956-1960)' },
+            null: { value: '4 states', context: 'in the Southeast hold 42% of Brazil\'s population' }
+        };
+
         function init() {
             initMap();
-            fetchAllData();
-            renderComparisons();
-            setupSearch();
+            fetchData();
+            renderRegionButtons();
+            renderLegend();
         }
 
         function initMap() {
-            map = L.map('brazil-map', { zoomControl: false }).setView([-14.235, -51.9253], 4);
-            L.control.zoom({ position: 'topright' }).addTo(map);
+            map = L.map('map', { zoomControl: false }).setView([-14.235, -51.9253], 4);
+            L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 attribution: '© OpenStreetMap © CARTO',
                 subdomains: 'abcd',
-                maxZoom: 19
+                maxZoom: 18
+            }).addTo(map);
+
+            // Brazil boundary (simplified)
+            const brazilBoundary = [[-33.7, -73.9], [-33.7, -34.8], [5.3, -34.8], [5.3, -73.9]];
+            L.rectangle(brazilBoundary, {
+                color: '#58075a',
+                weight: 2,
+                opacity: 0.4,
+                fillOpacity: 0.02,
+                dashArray: '5, 5'
             }).addTo(map);
         }
 
-        async function fetchAllData() {
+        async function fetchData() {
             try {
-                // Fetch states
-                const statesRes = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
-                statesData = await statesRes.json();
-
-                // Render everything
-                renderRegionCards();
-                renderRegionFilter();
-                addMapMarkers();
-                renderStatesGrid();
-
-                // Fetch currency
+                const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
+                statesData = await res.json();
+                addMarkers();
+                renderStateList();
                 fetchCurrency();
-                fetchCountryData();
-
-            } catch (error) {
-                console.error('Error:', error);
+                fetchCountryPop();
+            } catch (e) {
+                console.error(e);
             }
         }
 
@@ -901,60 +671,71 @@
             try {
                 const res = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/1?formato=json');
                 const data = await res.json();
-                if (data && data[0]) {
-                    document.getElementById('hero-rate').textContent = 'R$' + parseFloat(data[0].valor).toFixed(2);
-                }
-            } catch (e) {
-                document.getElementById('hero-rate').textContent = '--';
-            }
-        }
-
-        async function fetchCountryData() {
-            try {
-                const res = await fetch('https://restcountries.com/v3.1/alpha/BR');
-                const data = await res.json();
-                if (data && data[0]) {
-                    const pop = data[0].population;
-                    document.getElementById('hero-pop').textContent = (pop / 1000000).toFixed(0) + 'M';
+                if (data?.[0]) {
+                    document.getElementById('header-rate').textContent = 'R$' + parseFloat(data[0].valor).toFixed(2);
                 }
             } catch (e) {}
         }
 
-        function renderRegionCards() {
-            const container = document.getElementById('region-cards');
-            container.innerHTML = Object.entries(regionData).map(([name, data]) => {
-                const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
-                return `
-                    <div class="region-card ${data.colorClass}" data-region="${name}" onclick="filterByRegion('${name}')">
-                        <div class="region-icon ${data.bgClass}">${data.icon}</div>
-                        <h4>${name}</h4>
-                        <div class="region-pop">${(pop / 1000000).toFixed(0)}M</div>
-                        <div class="region-states">${data.states.length} states</div>
-                    </div>
-                `;
-            }).join('');
+        async function fetchCountryPop() {
+            try {
+                const res = await fetch('https://restcountries.com/v3.1/alpha/BR');
+                const data = await res.json();
+                if (data?.[0]) {
+                    document.getElementById('header-pop').textContent = (data[0].population / 1e6).toFixed(0) + 'M';
+                }
+            } catch (e) {}
         }
 
-        function renderRegionFilter() {
-            const container = document.getElementById('region-filter');
-            let html = `<button class="region-btn active" onclick="filterByRegion(null)">
-                <span class="dot" style="background: #666;"></span>
-                <span class="name">All Regions</span>
-                <span class="count">27</span>
+        function renderRegionButtons() {
+            const container = document.getElementById('region-buttons');
+            let html = `<button class="region-btn active" onclick="filterRegion(null)">
+                <span class="region-dot" style="background: #666;"></span>
+                <span class="region-name">All Regions</span>
+                <span class="region-pop">27</span>
             </button>`;
 
-            html += Object.entries(regionData).map(([name, data]) => `
-                <button class="region-btn" data-region="${name}" onclick="filterByRegion('${name}')">
-                    <span class="dot" style="background: ${data.color};"></span>
-                    <span class="name">${name}</span>
-                    <span class="count">${data.states.length}</span>
-                </button>
-            `).join('');
+            Object.entries(regionData).forEach(([name, data]) => {
+                const pop = data.states.reduce((sum, s) => sum + (statePopulations[s] || 0), 0);
+                html += `<button class="region-btn" data-region="${name}" onclick="filterRegion('${name}')">
+                    <span class="region-dot" style="background: ${data.color};"></span>
+                    <span class="region-name">${name}</span>
+                    <span class="region-pop">${(pop / 1e6).toFixed(0)}M</span>
+                </button>`;
+            });
 
             container.innerHTML = html;
         }
 
-        function addMapMarkers() {
+        function renderLegend() {
+            const container = document.getElementById('map-legend');
+            let html = '<div class="legend-title">Regions</div>';
+            Object.entries(regionData).forEach(([name, data]) => {
+                html += `<div class="legend-item">
+                    <span class="legend-dot" style="background: ${data.color};"></span>
+                    <span>${name}</span>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderStateList() {
+            const container = document.getElementById('state-list');
+            const label = document.getElementById('states-label');
+
+            const filtered = statesData.filter(s => !activeRegion || s.regiao.nome === activeRegion);
+            label.textContent = activeRegion ? `${activeRegion} (${filtered.length})` : `All States (27)`;
+
+            container.innerHTML = filtered.map(state => {
+                const pop = statePopulations[state.sigla] || 0;
+                return `<div class="state-item" onclick="selectState('${state.sigla}')">
+                    <span class="state-name">${state.nome}</span>
+                    <span class="state-abbr">${state.sigla}</span>
+                </div>`;
+            }).join('');
+        }
+
+        function addMarkers() {
             markers.forEach(m => map.removeLayer(m));
             markers = [];
 
@@ -963,190 +744,123 @@
                 if (!capital) return;
 
                 const regionName = state.regiao.nome;
-                const color = regionData[regionName]?.color || '#666';
-                const pop = statePopulations[state.sigla] || 0;
-
                 if (activeRegion && regionName !== activeRegion) return;
 
+                const color = regionData[regionName]?.color || '#666';
+                const pop = statePopulations[state.sigla] || 0;
+                const area = stateAreas[state.sigla] || 1;
+                const density = pop / area;
+
+                let radius;
+                if (currentView === 'population') {
+                    radius = Math.max(8, Math.min(30, Math.sqrt(pop / 1e6) * 5));
+                } else if (currentView === 'density') {
+                    radius = Math.max(8, Math.min(25, Math.sqrt(density) * 3));
+                } else {
+                    radius = Math.max(8, Math.min(30, Math.sqrt(area / 10000) * 2));
+                }
+
                 const marker = L.circleMarker([capital.lat, capital.lng], {
-                    radius: Math.max(8, Math.min(25, Math.sqrt(pop / 1000000) * 5)),
+                    radius,
                     fillColor: color,
                     color: '#fff',
                     weight: 2,
                     opacity: 1,
-                    fillOpacity: 0.85
+                    fillOpacity: 0.8
                 }).addTo(map);
 
-                marker.on('click', () => showStateDetails(state));
+                marker.on('click', () => selectState(state.sigla));
 
-                const popM = (pop / 1000000).toFixed(1);
-                const areaK = ((stateAreas[state.sigla] || 0) / 1000).toFixed(0);
+                const popM = (pop / 1e6).toFixed(1);
+                const areaK = (area / 1000).toFixed(0);
                 marker.bindPopup(`
-                    <div class="popup-content">
-                        <h4>${state.nome}</h4>
-                        <div class="popup-stat"><span>Capital</span><strong>${capital.name}</strong></div>
-                        <div class="popup-stat"><span>Population</span><strong>${popM}M</strong></div>
-                        <div class="popup-stat"><span>Area</span><strong>${areaK}k km²</strong></div>
-                        <div class="popup-stat"><span>Region</span><strong>${regionName}</strong></div>
-                    </div>
+                    <div class="popup-title">${state.nome}</div>
+                    <div class="popup-row"><span class="popup-label">Capital</span><span class="popup-value">${capital.name}</span></div>
+                    <div class="popup-row"><span class="popup-label">Population</span><span class="popup-value">${popM}M</span></div>
+                    <div class="popup-row"><span class="popup-label">Area</span><span class="popup-value">${areaK}k km²</span></div>
+                    <div class="popup-row"><span class="popup-label">Density</span><span class="popup-value">${density.toFixed(1)}/km²</span></div>
                 `);
 
                 markers.push(marker);
             });
         }
 
-        function filterByRegion(region) {
+        function filterRegion(region) {
             activeRegion = region;
 
-            // Update buttons
             document.querySelectorAll('.region-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.region === region || (!region && !btn.dataset.region));
             });
 
-            document.querySelectorAll('.region-card').forEach(card => {
-                card.classList.toggle('active', card.dataset.region === region);
-            });
+            addMarkers();
+            renderStateList();
+            updateInsight();
 
-            // Update map
-            addMapMarkers();
-
-            // Zoom to region
             if (region && regionData[region]) {
-                const states = regionData[region].states;
-                const coords = states.map(s => stateCapitals[s]).filter(Boolean).map(c => [c.lat, c.lng]);
+                const coords = regionData[region].states
+                    .map(s => stateCapitals[s])
+                    .filter(Boolean)
+                    .map(c => [c.lat, c.lng]);
                 if (coords.length) {
-                    const bounds = L.latLngBounds(coords);
-                    map.fitBounds(bounds, { padding: [50, 50] });
+                    map.fitBounds(L.latLngBounds(coords), { padding: [50, 50] });
                 }
             } else {
                 map.setView([-14.235, -51.9253], 4);
             }
 
-            // Update states grid
-            renderStatesGrid();
+            closePanel();
         }
 
-        function showStateDetails(state) {
-            const capital = stateCapitals[state.sigla];
-            const pop = statePopulations[state.sigla] || 0;
-            const area = stateAreas[state.sigla] || 0;
-            const density = area ? (pop / area).toFixed(1) : 'N/A';
+        function selectState(abbr) {
+            const state = statesData.find(s => s.sigla === abbr);
+            if (!state) return;
 
-            document.getElementById('selected-state').innerHTML = `
-                <h4>${state.nome} (${state.sigla})</h4>
-                <div class="detail-row"><span class="detail-label">Capital</span><span class="detail-value">${capital?.name || 'N/A'}</span></div>
-                <div class="detail-row"><span class="detail-label">Population</span><span class="detail-value">${(pop / 1000000).toFixed(1)}M</span></div>
-                <div class="detail-row"><span class="detail-label">Area</span><span class="detail-value">${area.toLocaleString()} km²</span></div>
-                <div class="detail-row"><span class="detail-label">Density</span><span class="detail-value">${density}/km²</span></div>
-                <div class="detail-row"><span class="detail-label">Region</span><span class="detail-value">${state.regiao.nome}</span></div>
-            `;
-        }
-
-        function renderStatesGrid() {
-            const container = document.getElementById('states-container');
-            const searchTerm = document.getElementById('state-search')?.value.toLowerCase() || '';
-
-            const filtered = statesData.filter(state => {
-                if (activeRegion && state.regiao.nome !== activeRegion) return false;
-                if (searchTerm && !state.nome.toLowerCase().includes(searchTerm) && !state.sigla.toLowerCase().includes(searchTerm)) return false;
-                return true;
-            });
-
-            container.innerHTML = filtered.map(state => {
-                const regionName = state.regiao.nome;
-                const color = regionData[regionName]?.color || '#666';
-                const capital = stateCapitals[state.sigla];
-                const pop = statePopulations[state.sigla] || 0;
-                const area = stateAreas[state.sigla] || 0;
-
-                return `
-                    <div class="state-card" style="border-color: ${color};" onclick="zoomToState('${state.sigla}')">
-                        <div class="state-card-header">
-                            <div>
-                                <h3>${state.nome}</h3>
-                                <div class="capital">${capital?.name || ''}</div>
-                            </div>
-                            <span class="state-abbr" style="color: ${color};">${state.sigla}</span>
-                        </div>
-                        <div class="state-stats">
-                            <div class="state-stat">
-                                <div class="value">${(pop / 1000000).toFixed(1)}M</div>
-                                <div class="label">Population</div>
-                            </div>
-                            <div class="state-stat">
-                                <div class="value">${(area / 1000).toFixed(0)}k</div>
-                                <div class="label">km²</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function zoomToState(abbr) {
             const capital = stateCapitals[abbr];
+            const pop = statePopulations[abbr] || 0;
+            const area = stateAreas[abbr] || 1;
+            const density = (pop / area).toFixed(1);
+            const regionName = state.regiao.nome;
+            const color = regionData[regionName]?.color || '#666';
+
+            document.getElementById('selected-name').textContent = state.nome;
+            document.getElementById('selected-region').textContent = regionName;
+            document.getElementById('selected-region').style.background = color + '22';
+            document.getElementById('selected-region').style.color = color;
+            document.getElementById('selected-pop').textContent = (pop / 1e6).toFixed(1) + 'M';
+            document.getElementById('selected-area').textContent = (area / 1000).toFixed(0) + 'k';
+            document.getElementById('selected-density').textContent = density;
+            document.getElementById('selected-capital').textContent = capital?.name || '-';
+
+            document.getElementById('selected-panel').classList.add('active');
+
             if (capital) {
-                map.setView([capital.lat, capital.lng], 7);
-                const state = statesData.find(s => s.sigla === abbr);
-                if (state) showStateDetails(state);
+                map.setView([capital.lat, capital.lng], 6);
             }
-            // Scroll to map
-            document.querySelector('.map-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function setupSearch() {
-            document.getElementById('state-search').addEventListener('input', renderStatesGrid);
+        function closePanel() {
+            document.getElementById('selected-panel').classList.remove('active');
         }
 
-        function renderComparisons() {
-            // Population comparison
-            const popData = [
-                { name: 'Brazil', value: 215, isBrazil: true },
-                { name: 'Russia', value: 144 },
-                { name: 'Japan', value: 125 },
-                { name: 'Germany', value: 84 }
-            ];
+        function setView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === view);
+            });
+            addMarkers();
 
-            const maxPop = Math.max(...popData.map(d => d.value));
-            document.getElementById('pop-comparison').innerHTML = popData.map(d => `
-                <div class="comparison-item">
-                    <div class="comparison-bar-container">
-                        <div class="comparison-label">
-                            <span>${d.name}</span>
-                            <strong>${d.value}M</strong>
-                        </div>
-                        <div class="comparison-bar">
-                            <div class="comparison-bar-fill ${d.isBrazil ? 'brazil' : 'other'}" style="width: ${(d.value / maxPop) * 100}%"></div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            // Area comparison
-            const areaData = [
-                { name: 'Brazil', value: 8.5, isBrazil: true },
-                { name: 'Australia', value: 7.7 },
-                { name: 'India', value: 3.3 },
-                { name: 'Argentina', value: 2.8 }
-            ];
-
-            const maxArea = Math.max(...areaData.map(d => d.value));
-            document.getElementById('area-comparison').innerHTML = areaData.map(d => `
-                <div class="comparison-item">
-                    <div class="comparison-bar-container">
-                        <div class="comparison-label">
-                            <span>${d.name}</span>
-                            <strong>${d.value}M km²</strong>
-                        </div>
-                        <div class="comparison-bar">
-                            <div class="comparison-bar-fill ${d.isBrazil ? 'brazil' : 'other'}" style="width: ${(d.value / maxArea) * 100}%"></div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            // Update legend title
+            const legend = document.getElementById('map-legend');
+            const titles = { population: 'Circle = Population', density: 'Circle = Density', area: 'Circle = Area' };
+            legend.querySelector('.legend-title').textContent = titles[view] || 'Regions';
         }
 
-        // Start
+        function updateInsight() {
+            const insight = regionInsights[activeRegion] || regionInsights[null];
+            document.getElementById('overlay-insight').textContent = insight.value;
+            document.getElementById('overlay-context').textContent = insight.context;
+        }
+
         init();
     </script>
 </body>
