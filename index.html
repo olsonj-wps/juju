@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juju - Brazil Data Explorer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * {
             margin: 0;
@@ -19,7 +21,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
         }
@@ -45,7 +47,7 @@
 
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
@@ -53,7 +55,7 @@
         .stat-card {
             background: white;
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -65,17 +67,22 @@
         }
 
         .stat-card .number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #0a7ca2;
             margin-bottom: 5px;
         }
 
         .stat-card .label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .stat-card.currency .number {
+            font-size: 1.6rem;
+            color: #58075a;
         }
 
         .section-title {
@@ -87,9 +94,143 @@
             border-left: 4px solid rgba(255,255,255,0.5);
         }
 
+        /* Map Section */
+        .map-section {
+            margin-bottom: 50px;
+        }
+
+        .map-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        #brazil-map {
+            height: 500px;
+            width: 100%;
+        }
+
+        .map-legend {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            border-top: 1px solid #eee;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 900px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0a7ca2;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list .label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-list .value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Population Chart */
+        .population-bars {
+            margin-top: 15px;
+        }
+
+        .pop-bar-item {
+            margin-bottom: 12px;
+        }
+
+        .pop-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+        }
+
+        .pop-bar-label span:first-child {
+            color: #333;
+        }
+
+        .pop-bar-label span:last-child {
+            color: #666;
+        }
+
+        .pop-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .pop-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0a7ca2, #58075a);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* States Grid */
         .states-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 50px;
         }
@@ -97,7 +238,7 @@
         .state-card {
             background: white;
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             cursor: pointer;
@@ -125,24 +266,24 @@
         }
 
         .state-card h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .state-card .abbr {
             display: inline-block;
             background: #f0f7f9;
             color: #0a7ca2;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
-        .state-card .region {
-            font-size: 0.85rem;
+        .state-card .info {
+            font-size: 0.8rem;
             color: #888;
         }
 
@@ -150,9 +291,9 @@
             display: inline-block;
             padding: 3px 8px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            margin-left: 8px;
+            margin-left: 5px;
         }
 
         .region-norte { background: #e8f5e9; color: #2e7d32; }
@@ -194,6 +335,21 @@
             text-decoration: none;
         }
 
+        .leaflet-popup-content-wrapper {
+            border-radius: 12px;
+        }
+
+        .popup-content h4 {
+            margin: 0 0 8px 0;
+            color: #0a7ca2;
+        }
+
+        .popup-content p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
         @media (max-width: 600px) {
             header h1 {
                 font-size: 2.5rem;
@@ -201,7 +357,11 @@
             }
 
             .stat-card .number {
-                font-size: 2rem;
+                font-size: 1.5rem;
+            }
+
+            #brazil-map {
+                height: 350px;
             }
         }
     </style>
@@ -219,7 +379,7 @@
                 <div class="label">States</div>
             </div>
             <div class="stat-card">
-                <div class="number" id="total-regions">--</div>
+                <div class="number" id="total-regions">5</div>
                 <div class="label">Regions</div>
             </div>
             <div class="stat-card">
@@ -227,12 +387,90 @@
                 <div class="label">Municipalities</div>
             </div>
             <div class="stat-card">
-                <div class="number" id="largest-state">--</div>
-                <div class="label">Largest State</div>
+                <div class="number" id="population">--</div>
+                <div class="label">Population</div>
+            </div>
+            <div class="stat-card currency">
+                <div class="number" id="usd-brl">--</div>
+                <div class="label">USD → BRL</div>
+            </div>
+            <div class="stat-card currency">
+                <div class="number" id="eur-brl">--</div>
+                <div class="label">EUR → BRL</div>
             </div>
         </div>
 
-        <h2 class="section-title">States of Brazil</h2>
+        <!-- Map Section -->
+        <div class="map-section">
+            <h2 class="section-title">Interactive Map</h2>
+            <div class="map-container">
+                <div id="brazil-map"></div>
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2e7d32;"></div>
+                        <span>Norte</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e65100;"></div>
+                        <span>Nordeste</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #1565c0;"></div>
+                        <span>Sudeste</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #c2185b;"></div>
+                        <span>Sul</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #7b1fa2;"></div>
+                        <span>Centro-Oeste</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Info -->
+        <div class="two-column">
+            <div class="info-card">
+                <h3>Country Facts</h3>
+                <ul class="info-list">
+                    <li>
+                        <span class="label">Capital</span>
+                        <span class="value">Brasília</span>
+                    </li>
+                    <li>
+                        <span class="label">Area</span>
+                        <span class="value">8,515,767 km²</span>
+                    </li>
+                    <li>
+                        <span class="label">Official Language</span>
+                        <span class="value">Portuguese</span>
+                    </li>
+                    <li>
+                        <span class="label">Currency</span>
+                        <span class="value">Real (BRL)</span>
+                    </li>
+                    <li>
+                        <span class="label">Time Zones</span>
+                        <span class="value">4 (UTC-2 to UTC-5)</span>
+                    </li>
+                    <li>
+                        <span class="label">Calling Code</span>
+                        <span class="value">+55</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Most Populous States</h3>
+                <div class="population-bars" id="population-chart">
+                    <div class="loading-spinner" style="border-color: #0a7ca2; border-top-color: #58075a;"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">All 27 States</h2>
 
         <div id="states-container">
             <div class="loading">
@@ -243,16 +481,19 @@
     </div>
 
     <footer>
-        <p>Data from <a href="https://servicodados.ibge.gov.br" target="_blank">IBGE API</a> | Built with Juju</p>
+        <p>Data from <a href="https://servicodados.ibge.gov.br" target="_blank">IBGE</a>,
+        <a href="https://www.bcb.gov.br" target="_blank">Banco Central do Brasil</a>,
+        <a href="https://restcountries.com" target="_blank">REST Countries</a> | Built with Juju</p>
     </footer>
 
     <script>
-        const regionNames = {
-            1: 'Norte',
-            2: 'Nordeste',
-            3: 'Sudeste',
-            4: 'Sul',
-            5: 'Centro-Oeste'
+        // Region colors matching legend
+        const regionColors = {
+            'Norte': '#2e7d32',
+            'Nordeste': '#e65100',
+            'Sudeste': '#1565c0',
+            'Sul': '#c2185b',
+            'Centro-Oeste': '#7b1fa2'
         };
 
         const regionClasses = {
@@ -263,41 +504,211 @@
             'Centro-Oeste': 'region-centro-oeste'
         };
 
+        // State capitals coordinates
+        const stateCapitals = {
+            'AC': { name: 'Rio Branco', lat: -9.97499, lng: -67.8243 },
+            'AL': { name: 'Maceió', lat: -9.66599, lng: -35.735 },
+            'AP': { name: 'Macapá', lat: 0.034934, lng: -51.0694 },
+            'AM': { name: 'Manaus', lat: -3.11866, lng: -60.0212 },
+            'BA': { name: 'Salvador', lat: -12.9714, lng: -38.5014 },
+            'CE': { name: 'Fortaleza', lat: -3.71722, lng: -38.5434 },
+            'DF': { name: 'Brasília', lat: -15.7942, lng: -47.8822 },
+            'ES': { name: 'Vitória', lat: -20.3155, lng: -40.3128 },
+            'GO': { name: 'Goiânia', lat: -16.6869, lng: -49.2648 },
+            'MA': { name: 'São Luís', lat: -2.53073, lng: -44.3068 },
+            'MT': { name: 'Cuiabá', lat: -15.601, lng: -56.0974 },
+            'MS': { name: 'Campo Grande', lat: -20.4697, lng: -54.6201 },
+            'MG': { name: 'Belo Horizonte', lat: -19.9167, lng: -43.9345 },
+            'PA': { name: 'Belém', lat: -1.45583, lng: -48.5044 },
+            'PB': { name: 'João Pessoa', lat: -7.11532, lng: -34.861 },
+            'PR': { name: 'Curitiba', lat: -25.4284, lng: -49.2733 },
+            'PE': { name: 'Recife', lat: -8.05428, lng: -34.8813 },
+            'PI': { name: 'Teresina', lat: -5.08921, lng: -42.8016 },
+            'RJ': { name: 'Rio de Janeiro', lat: -22.9068, lng: -43.1729 },
+            'RN': { name: 'Natal', lat: -5.79448, lng: -35.211 },
+            'RS': { name: 'Porto Alegre', lat: -30.0346, lng: -51.2177 },
+            'RO': { name: 'Porto Velho', lat: -8.76194, lng: -63.9039 },
+            'RR': { name: 'Boa Vista', lat: 2.81972, lng: -60.6733 },
+            'SC': { name: 'Florianópolis', lat: -27.5954, lng: -48.548 },
+            'SP': { name: 'São Paulo', lat: -23.5505, lng: -46.6333 },
+            'SE': { name: 'Aracaju', lat: -10.9472, lng: -37.0731 },
+            'TO': { name: 'Palmas', lat: -10.2491, lng: -48.3243 }
+        };
+
+        // Population data (2022 Census - IBGE)
+        const statePopulations = {
+            'SP': 44411238, 'MG': 20539989, 'RJ': 16054524, 'BA': 14136417,
+            'PR': 11444380, 'RS': 10882965, 'PE': 9058155, 'CE': 8791688,
+            'PA': 8116132, 'SC': 7610361, 'MA': 6775805, 'GO': 7056495,
+            'AM': 3941613, 'PB': 3974495, 'ES': 3833712, 'RN': 3302406,
+            'AL': 3127683, 'MT': 3567234, 'PI': 3269200, 'DF': 2817381,
+            'MS': 2756700, 'SE': 2209558, 'RO': 1581196, 'TO': 1511460,
+            'AC': 830018, 'AP': 733759, 'RR': 636707
+        };
+
+        let map;
+        let statesData = [];
+
+        // Initialize map
+        function initMap() {
+            map = L.map('brazil-map').setView([-14.235, -51.9253], 4);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+        }
+
+        // Add state markers to map
+        function addStateMarkers(states) {
+            states.forEach(state => {
+                const capital = stateCapitals[state.sigla];
+                if (capital) {
+                    const regionColor = regionColors[state.regiao.nome] || '#0a7ca2';
+                    const pop = statePopulations[state.sigla];
+                    const popFormatted = pop ? (pop / 1000000).toFixed(1) + 'M' : 'N/A';
+
+                    const marker = L.circleMarker([capital.lat, capital.lng], {
+                        radius: Math.max(6, Math.min(20, Math.sqrt(pop / 1000000) * 4)),
+                        fillColor: regionColor,
+                        color: '#fff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+
+                    marker.bindPopup(`
+                        <div class="popup-content">
+                            <h4>${state.nome} (${state.sigla})</h4>
+                            <p><strong>Capital:</strong> ${capital.name}</p>
+                            <p><strong>Region:</strong> ${state.regiao.nome}</p>
+                            <p><strong>Population:</strong> ${popFormatted}</p>
+                        </div>
+                    `);
+                }
+            });
+        }
+
+        // Fetch currency exchange rates from BCB
+        async function fetchCurrencyRates() {
+            try {
+                // USD to BRL
+                const usdRes = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/1?formato=json');
+                const usdData = await usdRes.json();
+                if (usdData && usdData[0]) {
+                    document.getElementById('usd-brl').textContent = 'R$ ' + parseFloat(usdData[0].valor).toFixed(2);
+                }
+
+                // EUR to BRL
+                const eurRes = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.21619/dados/ultimos/1?formato=json');
+                const eurData = await eurRes.json();
+                if (eurData && eurData[0]) {
+                    document.getElementById('eur-brl').textContent = 'R$ ' + parseFloat(eurData[0].valor).toFixed(2);
+                }
+            } catch (error) {
+                console.error('Error fetching currency:', error);
+                document.getElementById('usd-brl').textContent = '--';
+                document.getElementById('eur-brl').textContent = '--';
+            }
+        }
+
+        // Fetch Brazil population from REST Countries
+        async function fetchCountryData() {
+            try {
+                const res = await fetch('https://restcountries.com/v3.1/alpha/BR');
+                const data = await res.json();
+                if (data && data[0]) {
+                    const pop = data[0].population;
+                    document.getElementById('population').textContent = (pop / 1000000).toFixed(0) + 'M';
+                }
+            } catch (error) {
+                console.error('Error fetching country data:', error);
+            }
+        }
+
+        // Render population chart
+        function renderPopulationChart() {
+            const topStates = Object.entries(statePopulations)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            const maxPop = topStates[0][1];
+            const container = document.getElementById('population-chart');
+
+            container.innerHTML = topStates.map(([abbr, pop]) => {
+                const state = statesData.find(s => s.sigla === abbr);
+                const name = state ? state.nome : abbr;
+                const percentage = (pop / maxPop) * 100;
+                const popMillions = (pop / 1000000).toFixed(1);
+
+                return `
+                    <div class="pop-bar-item">
+                        <div class="pop-bar-label">
+                            <span>${name}</span>
+                            <span>${popMillions}M</span>
+                        </div>
+                        <div class="pop-bar">
+                            <div class="pop-bar-fill" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Fetch IBGE data
         async function fetchBrazilData() {
             try {
                 // Fetch states
                 const statesRes = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
-                const states = await statesRes.json();
+                statesData = await statesRes.json();
 
                 // Fetch municipalities count
                 const municipalitiesRes = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
                 const municipalities = await municipalitiesRes.json();
 
                 // Update stats
-                document.getElementById('total-states').textContent = states.length;
-                document.getElementById('total-regions').textContent = '5';
+                document.getElementById('total-states').textContent = statesData.length;
                 document.getElementById('total-municipalities').textContent = municipalities.length.toLocaleString();
-                document.getElementById('largest-state').textContent = 'AM';
 
-                // Render states
+                // Add markers to map
+                addStateMarkers(statesData);
+
+                // Render population chart
+                renderPopulationChart();
+
+                // Render states grid
                 const container = document.getElementById('states-container');
                 container.innerHTML = '';
 
                 const grid = document.createElement('div');
                 grid.className = 'states-grid';
 
-                states.forEach((state, index) => {
+                statesData.forEach((state) => {
                     const regionName = state.regiao.nome;
+                    const capital = stateCapitals[state.sigla];
+                    const pop = statePopulations[state.sigla];
+                    const popFormatted = pop ? (pop / 1000000).toFixed(1) + 'M' : 'N/A';
+
                     const card = document.createElement('div');
                     card.className = 'state-card';
-                    card.style.animationDelay = `${index * 0.05}s`;
                     card.innerHTML = `
                         <span class="abbr">${state.sigla}</span>
                         <h3>${state.nome}</h3>
-                        <p class="region">
-                            Region: <span class="region-badge ${regionClasses[regionName]}">${regionName}</span>
+                        <p class="info">
+                            Capital: ${capital ? capital.name : 'N/A'}<br>
+                            Pop: ${popFormatted}
+                            <span class="region-badge ${regionClasses[regionName]}">${regionName}</span>
                         </p>
                     `;
+
+                    // Click to zoom on map
+                    card.addEventListener('click', () => {
+                        if (capital) {
+                            map.setView([capital.lat, capital.lng], 7);
+                        }
+                    });
+
                     grid.appendChild(card);
                 });
 
@@ -313,8 +724,11 @@
             }
         }
 
-        // Initialize
+        // Initialize everything
+        initMap();
         fetchBrazilData();
+        fetchCurrencyRates();
+        fetchCountryData();
     </script>
 </body>
 </html>
